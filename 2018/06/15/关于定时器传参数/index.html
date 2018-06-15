@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="shenlan">
 <meta property="og:description" content="一般来说setTimeout(fn,time)，fn只能为函数名，如果写fn()，会发现立即执行了，并没有实现传参数的目的，那么如何实现定时器传参数呢？">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-15T09:13:08.384Z">
+<meta property="og:updated_time" content="2018-06-15T09:21:07.319Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于定时器传参数">
 <meta name="twitter:description" content="一般来说setTimeout(fn,time)，fn只能为函数名，如果写fn()，会发现立即执行了，并没有实现传参数的目的，那么如何实现定时器传参数呢？">
@@ -167,8 +167,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一般来说<code>setTimeout(fn,time)</code>，<code>fn</code>只能为函数名，如果写<code>fn()</code>，会发现立即执行了，并没有实现传参数的目的，那么如何实现定时器传参数呢？<br><a id="more"></a><br>具体需求实现<br>=</p>
-<p>正好最近有个项目是移动端支付，支付时，需要定时器去查询该订单是否支付完成。这就用到了定时器传参数，因为查询的时候需要传入订单ID。<br><br><br>关键代码如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_queryOrderStatus</span> (<span class="params">orderId</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		queryOrderStatus(orderId)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;                                   </span><br><span class="line"><span class="keyword">var</span> timer=setInterval(_queryOrderStatus(res.data.data.out_trade_no),<span class="number">5000</span>);</span><br></pre></td></tr></table></figure></p>
+        <p>一般来说<code>setTimeout(fn,time)</code>，<code>fn</code>只能为函数名，如果写<code>fn()</code>，会发现立即执行了，并没有实现传参数的目的，那么如何实现定时器传参数呢？<br><a id="more"></a><br>需求</p>
+<p>#<br>正好最近有个项目是移动端支付，支付时，需要定时器去查询该订单是否支付完成。这就用到了定时器传参数，因为查询的时候需要传入订单ID。<br><br><br>关键代码如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_queryOrderStatus</span> (<span class="params">orderId</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		queryOrderStatus(orderId)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;                                   </span><br><span class="line"><span class="keyword">var</span> timer=setInterval(_queryOrderStatus(res.data.data.out_trade_no),<span class="number">5000</span>);</span><br></pre></td></tr></table></figure></p>
 <p>我们可以在<code>_queryOrderStatus</code> 函数里<code>return</code> 出来一个实际执行的函数，这样就能曲线救国实现定时器传参数。</p>
 
       
